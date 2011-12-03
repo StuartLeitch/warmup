@@ -27,6 +27,7 @@ namespace warmup
 
         public static void CopyDirectory(string source, string destination)
         {
+            if (source.EndsWith("\\.git") || source.Contains("\\.hg")) return;
             if (destination[destination.Length - 1] != Path.DirectorySeparatorChar)
                 destination += Path.DirectorySeparatorChar;
             if (!Directory.Exists(destination)) Directory.CreateDirectory(destination);
