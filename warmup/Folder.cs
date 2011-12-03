@@ -10,6 +10,9 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
+
+using System.Globalization;
+
 namespace warmup
 {
     using System;
@@ -27,6 +30,13 @@ namespace warmup
 
         public static void CopyDirectory(string source, string destination)
         {
+            if (source.EndsWith("\\build")) return;
+            if (source.EndsWith("\\bin")) return;
+            if (source.EndsWith("\\debug")) return;
+            if (source.EndsWith("\\obj")) return;
+            if (source.Contains("ReSharper")) return;
+            if (source.EndsWith("\\DeploymentPackages")) return;
+
             if (source.EndsWith("\\.git") || source.Contains("\\.hg")) return;
             if (destination[destination.Length - 1] != Path.DirectorySeparatorChar)
                 destination += Path.DirectorySeparatorChar;
@@ -36,9 +46,22 @@ namespace warmup
             {
                 // Sub directories
 
+                if (element.EndsWith(".obj", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".pdb", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".user", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".suo", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".bak", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".cache", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".log", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".zip", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".user", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".local.xml", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".Local.testSettings", true, new CultureInfo("en-US"))) continue;
+                if (element.EndsWith(".Publish.xml", true, new CultureInfo("en-US"))) continue;
+
                 if (Directory.Exists(element))
                     CopyDirectory(element, destination + Path.GetFileName(element));
-                    // Files in directory
+                // Files in directory
 
                 else
                     File.Copy(element, destination + Path.GetFileName(element), true);

@@ -125,7 +125,9 @@ namespace warmup
         public void MoveToDestination(string target)
         {
             if (string.IsNullOrEmpty(target)) return;
-            if (!Directory.Exists(target)) return;
+            if (!Directory.Exists(target))
+                Directory.CreateDirectory(target);
+
             if (target == FullPath) return;
 
             DirectoryInfo folder = new DirectoryInfo(FullPath);
