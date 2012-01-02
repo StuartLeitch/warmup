@@ -54,6 +54,7 @@ namespace warmup
             Console.WriteLine("warmup templateFolderName replacementName [targetDirectoryIfDifferentThanReplacementName]");
             Console.WriteLine("Example: warmup base Bob");
             Console.WriteLine("Example: 'base' is a subfolder in your warmup template that has a warmup template in it. 'Bob' is what you want to use instead of the token '__NAME__'.");
+            Console.ReadKey();
         }
 
         static IExporter GetExporter()
