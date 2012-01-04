@@ -29,7 +29,7 @@ namespace warmup
                 string sourceLocationToGit = sourceLocation.AbsolutePath;
 
                 var psi = new ProcessStartInfo("cmd",
-                                               string.Format(" /c git clone {0} {1}", sourceLocationToGit, target.FullPath));
+                                               string.Format(" /c git clone --recursive {0} {1}", sourceLocationToGit, target.FullPath));
 
                 psi.UseShellExecute = false;
                 psi.CreateNoWindow = true;
