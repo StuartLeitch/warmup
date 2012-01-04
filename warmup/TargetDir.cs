@@ -10,6 +10,9 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
+
+using System.Text;
+
 namespace warmup
 {
     using System;
@@ -59,7 +62,7 @@ namespace warmup
             {
                 if (ignoredExtensions.Contains(info.Extension)) continue;
                 //skip the .git directory
-                if (new[] {"\\.git\\"}.Contains(info.FullName)) continue;
+                if (info.FullName.Contains("\\.git\\")) continue;
 
                 //process contents
                 string contents = File.ReadAllText(info.FullName);
@@ -124,7 +127,8 @@ namespace warmup
         public void MoveToDestination(string target)
         {
             if (string.IsNullOrEmpty(target)) return;
-            if (!Directory.Exists(target)) return;
+            if (!Directory.Exists(target))
+                Directory.CreateDirectory(target);
             if (target == FullPath) return;
 
             DirectoryInfo folder = new DirectoryInfo(FullPath);

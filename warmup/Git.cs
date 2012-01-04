@@ -25,7 +25,8 @@ namespace warmup
             string[] piecesOfPath = sourceLocation.ToString().Split(separationCharacters, StringSplitOptions.RemoveEmptyEntries);
             if (piecesOfPath != null && piecesOfPath.Length > 0)
             {
-                string sourceLocationToGit = piecesOfPath[0] + ".git";
+                //string sourceLocationToGit = piecesOfPath[0] + ".git";
+                string sourceLocationToGit = sourceLocation.AbsolutePath;
 
                 var psi = new ProcessStartInfo("cmd",
                                                string.Format(" /c git clone {0} {1}", sourceLocationToGit, target.FullPath));
@@ -47,7 +48,7 @@ namespace warmup
                 Console.WriteLine(output);
                 Console.WriteLine(error);
 
-                var templateName = piecesOfPath[1];
+                var templateName = piecesOfPath.Length > 1 ? piecesOfPath[1] : piecesOfPath[0];
                 GitTemplateExtractor extractor = new GitTemplateExtractor(target, templateName);
                 extractor.Extract();
                 //string git_directory = Path.Combine(target.FullPath, ".git");

@@ -10,6 +10,9 @@
 // under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR 
 // CONDITIONS OF ANY KIND, either express or implied. See the License for the 
 // specific language governing permissions and limitations under the License.
+
+using System.Threading;
+
 namespace warmup
 {
     using System;
@@ -36,6 +39,7 @@ namespace warmup
             exporter.Export(WarmupConfiguration.settings.SourceControlWarmupLocation, templateName, td);
             Console.WriteLine("replacing tokens");
             td.ReplaceTokens(name);
+            Thread.Sleep(1000); // Seem to have file locking issue?
             td.MoveToDestination(target);
         }
 
@@ -54,6 +58,7 @@ namespace warmup
             Console.WriteLine("warmup templateFolderName replacementName [targetDirectoryIfDifferentThanReplacementName]");
             Console.WriteLine("Example: warmup base Bob");
             Console.WriteLine("Example: 'base' is a subfolder in your warmup template that has a warmup template in it. 'Bob' is what you want to use instead of the token '__NAME__'.");
+            Console.ReadKey();
         }
 
         static IExporter GetExporter()
